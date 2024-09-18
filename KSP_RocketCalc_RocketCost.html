@@ -10,15 +10,275 @@
         </header>
         <div Class="articleArea" id="Introduction">
             <h1>Introduction</h1>
+            <p>
+                Kerbal Space Program (KSP) is a game in which players assemble rockets 
+                by combining various rocket parts, such as rocket engines, fuel tanks, 
+                payload fairings, etc.
+            </p>
+            <p>
+                Parameters such as the rocket’s cost and capabilities are dependent on 
+                the types of parts used, their number of parts used, and their arrangement 
+                within the rocket. 
+            </p>
+            <p>
+                The purpose of this excel sheet was to calculate the actual launch costs of 
+                various rocket designs, and allow for comparing the cost effectiveness of rocket 
+                designs. 
+            </p>
         </div>
         <div Class="articleArea" id="GameMechanics">
             <h1>Game Mechanics</h1>
+            <p>
+                Within KSP, there is a game mechanic that allows for rockets to have flown to be 
+                recovered, allowing for a partial refund of the cost of the rocket.
+            </p>
+            <p>
+                However, not all rocket parts can be recovered. Any rocket part that is destroyed, 
+                despawns (by exiting the range in which in-game physics are calculated), or is unable 
+                to return to the surface of Kerbin (the planet) becomes unrecoverable. 
+            </p>
+            <p>
+                Examples of unrecoverable parts of a rocket include
+                <ul>
+                    <li>Rocket stages that are jettisoned at a low altitude and do not make it into orbit</li>
+                    <li>Any fuel burnt</li>
+                    <li>Any stages that are unable to de-orbit and come back to the surface of Kerbin (the planet)</li>
+                    <li>Any rocket parts that are destroyed during descent or landing on Kerbin (typically 
+                        caused by the part crashing onto the surface too hard)</li>
+                </ul>
+            </p>
+            <p>
+                Any parts that are not destroyed or despawned, and returns safely to the surface of 
+                Kerbin can be recovered for a partial refund of the part cost. The recovered cost is 
+                multiplied by the recovery rate, which is determined by the distance in which the part 
+                is recovered from the launch site.
+                <div Class="paragraphIndent">
+                    <p>
+                        The recovery rate is determined by the formula<br>
+                        0.98 - surface_distance_in_km/2150
+                    </p>
+                    <p>
+                        The recovery rate ranges from a 10.32% minimum to a 100% maximum
+                    </p>
+                </div>
+            </p>
+            <p>
+                Based on these game mechanics, the launch cost of a given rocket can be expressed 
+                as a linear equation<br>
+                <div Class="paragraphIndent">
+                    <p>
+                        LaunchCost = UnrecoverableCost + LossesFromImperfectRecovery<br>
+                        LaunchCost = UnrecoverableCost + (1-RecoveryRate)*RecoverableCost
+                    </p>
+                    <p>
+                        As<br>
+                        TotalCost = UnrecoverableCost + RecoverableCost<br>
+                        UnrecoverableCost = TotalCost - RecoverableCost
+                    </p>
+                    <p>
+                        It is possible to manipulate the equation to<br>
+                        LaunchCost = (TotalCost - RecoverableCost) + (1-RecoveryRate)*RecoverableCost<br>
+                        <b>LaunchCost = TotalCost - RecoverableCost*RecoveryRate</b>
+                    </p>
+                </div>
+            </p>
+            <p>
+                The equation in the form of <br>
+                LaunchCost = TotalCost - RecoverableCost*RecoveryRate <br>
+                is better suited for the game, as the total cost is given in-game, thus 
+                only the RecoveryCost needs to be determined by removing parts and emptying tanks
+                <div Class="paragraphIndent">
+                    <!--DIAGRAM?-->
+                </div>
+            </p>
+            <p>
+                Cost comparisons between rocket designs can be done by calculating the intersections of 
+                the two linear equations. The intersection provides the RecoveryRate in which the rocket 
+                designs have equal launch costs. <br>
+                <b>Intersection RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)</b>
+                <div class="paragraphIndent">
+                    <p>Note: The formula typically used to calculate the intersection of two linear 
+                        equations in the form of y=ax+b is<br>
+                        x=(b1-b2)/(a2-a1)<br>
+                        Where a2 is subtracted by a1 in the denominator
+                    </p>
+                    <p>
+                        For the purposes of this comparison, a = -RecoverableCost. Simplifying the equation 
+                        to use RecoverableCost (positive) instead of -RecoverableCost (negative),<br>
+                        x=(b1-b2)/((-RecoverableCost2)-(-RecoverableCost1))<br>
+                        x=(b1-b2)/(-RecoverableCost2+RecoverableCost1)<br>
+                        x=(b1-b2)/(RecoverableCost1-RecoverableCost2)<br>
+                        And thus, RecoverableCost1 is subtracted by RecoverableCost2, which is the reverse of 
+                        the typical equation.
+                    </p>
+                </div>
+            </p>
         </div>
         <div Class="articleArea" id="Implementation">
             <h1>Implementation</h1>
+            <h2>Launch Cost Calcuations</h2>
+            <p>
+                The rocket launch costs for each rocket design is calculated on the 
+                <i>Rocket Cost Sheet</i>
+            </p>
+            <p>
+                RecoveryRates were calculated for every 10% increment, along with 3 additional values
+                <ul>
+                    <li>98% - the RecoveryRate when a part lands within an approximately 25 km² 
+                        area surrounding Kerbal Space Center. </li>
+                    <li>54.16% - the RecoveryRate when travelling a quarter orbit around Kerbin</li>
+                    <li>10.32% - the RecoveryRate when travelling a half orbit around Kerbin, directly 
+                        opposite Kerbin from the Kerbal Space Center, and is the furthest possible 
+                        distance from the launch site.</li>
+                </ul>
+            </p>
+            <p>
+                The list of costs was calculated using the expression<br>
+                EXPRESSION, include image
+            </p>
+            <h2>Cost Comparisons</h2>
+            <p>
+                The cost comparisons between rocket designs is calculated on the 
+                <i>Cost Comparison Sheet</i>
+            </p>
+            <p>
+                The names of each rocket design is automatically duplicated from the 
+                <i>Rocket Cost Sheet</i> on the first row and column with the expression<br>
+                ROW EXPRESSION<br>
+                COLUMN EXPRESSION
+            </p>
+            <p>
+                The comparison function was implemented to compare the costs of each rocket, but 
+                this produced issues that required addressing
+                <div Class="paragraphIndent">
+                    <p>
+                        Issue 1: The intersection of the two linear equations falls beyond the range 
+                        of 0 and 1 (inclusive). Since it is not possible to have a RecoveryRate of 
+                        less than 0% (a complete loss) or greater than 100% (a complete recovery), 
+                        the intersection does not provide meaningful information. 
+                    </p>
+                    <p>
+                        Issue 2: The rockets have equal RecoverableCost. This causes the linear 
+                        equations to be parallel, and thus having no intersection.
+                    </p>
+                    <p>
+                        Under the circumstances outlined in Issue 1 and Issue 2, the cost comparison can 
+                        be done by simply comparing the TotalCost of the rockets. Since the linear 
+                        equations do not intersect within the range of 0 and 1 (between a 0% and 100% 
+                        RecoveryRate), the rocket with the lower TotalCost will always be cheaper within the 
+                        useful range.
+                        <!--INCLUDE VISUALS USING DESMOS?-->
+                    </p>
+                    <p>
+                        Issue 3: For linear equations that do intersect within the range of 0 and 1, the 
+                        value of the intersection alone does not provide useful information. Along with knowing 
+                        the intersection, it is necessary to determine which rocket design is cheaper for a 
+                        given RecoveryRate.
+                    </p>
+                    <p>
+                        This again can be achieved by comparing the TotalCosts of the rockets. The rocket with the 
+                        lower TotalCost will be cheaper from 0% to the intersection RecoveryRate, and the rocket 
+                        with the higher TotalCost will be cheaper from the intersection RecoveryRate till 100%.
+                        <!--INCLUDE VISUALS USING DESMOS?-->
+                    </p>
+                </div>
+            </p>
+            <p>
+                The Expression included the fixes to the issues, and was implemented with the following logic
+                <div Class="paragraphIndent">
+                    <p>
+                        Step1: Don’t run a comparison if the Column or Row is empty - filter with an IF statement
+                    </p>
+                    <p>
+                        Step2: Don’t run a comparison if the costs if the ColumnRocket and the RowRocket are 
+                        the same - filter with an IF statement
+                    </p>
+                    <p>
+                        Step3: Calculate for the intersection using the formula<br>
+                        RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)
+                    </p>
+                    <div class="paragraphIndent">
+                        <p>
+                            Step 3a: If the RecoveryRate is <0 or >1, compare the TotalCost. If the RowRocket 
+                            has a cheaper TotalCost than ColumnRocket, fill the box with “always”, otherwise 
+                            fill with “never”
+                        </p>
+                        <p>
+                            Step 3b: If the RecoveryRate is between 0 and 1, compare the TotalCost. If the 
+                            RowRocket has a cheaper TotalCost than ColumnRocket, fill the box with “<”, otherwise 
+                            fill with “>”. Then append the RecoveryRate
+                        </p>
+                    </div>
+                    <p>
+                        Step 4: use the IFERROR expression to catch for the #DIV/0! error. If triggered, this 
+                        means the linear equations of the rockets do not intersect. compare the TotalCost. If 
+                        the RowRocket has a cheaper TotalCost than ColumnRocket, fill the box with “always”, 
+                        otherwise fill with “never”
+                    </p>
+                </div>
+            </p>
+            <p>
+                The implemented expression is as followed<br>
+                EXPRESSION
+                <div class="paragraphIndent">
+                    Note: There are several repeated portions within this expression. This is an artifact of 
+                    being unable to “store” values in expressions using variables
+                </div>
+            </p>
         </div>
         <div Class="articleArea" id="Example">
             <h1>Example</h1>
+            <p>
+                The Class 151-auto rocket was a next-generation rocket designed to 
+                carry heavier payloads to orbit using the newly unlocked RE-I5 "Skipper" 
+                rocket engine. <br>
+                PICTURE 151-auto
+            </p>
+            <p>
+                However, a new contract to test LFB KR1x2 "Twin Boar" rocket engine allowed 
+                for temporary use of the engine, and a X152 prototype rocket using the new 
+                engine was built. The performance of the X152 was tested to be comparable 
+                with Class 151-auto.<br>
+                PICTURE X152
+            </p>
+            <p>
+                The TotalCost of the X152 was more expensive than the Class 151-auto, but the 
+                X152 had a higher RecoverableCost. This was a product of the X152 having less 
+                unrecoverable parts, notably the lack of solid rocket boosters that would be 
+                jettisoned (and thus be unrecoverable) in the early stages of the launch. There 
+                was a possibility that the X152 could prove to be the cheaper launch vehicle.
+            </p>
+            <p>
+                The launch costs of the two rockets were studied using the tool. <br>
+                PICTURE RCS, CCS
+            </p>
+            <p>
+                After analysis, while it was true that the X152 could have cheaper launch costs 
+                than the Class 151-auto, that would only be true if the X152 could be recovered 
+                at a RecoveryRate greater than about 86%. This would mean that the rocket would 
+                need to land and be recovered at a location closer than 241 km from the Launch 
+                site. Although this would allow for a non-trivial area to land within, controlling 
+                the descent to land within the area would require careful calculation and skill.
+            </p>
+            <p>
+                This narrow scope in which the X152 would be cheaper was due to its expensive 
+                TotalCost. Despite having more recoverable parts, the total costs of the 
+                recoverable parts was close to the TotalCost of the Class 151-auto, meaning that 
+                any benefit could not be realized unless most of the cost could be recovered with 
+                a high RecoveryRate.
+            </p>
+            <p>
+                Furthermore, the maximum possible benefit the X152 could provide over the Class 
+                151-auto was only a cost of 1563. Considering that a single AV-R8 Winglet (attached 
+                at the bottom of the rocket) costs 640, which had the possibility of getting destroyed 
+                in a bad landing, the benefits were meagre and could easily be lost.
+            </p>
+            <p>
+                Based on this analysis, it was decided to not pursue further development of the X152. 
+                The testing was done with a temporary unlocking of the  LFB KR1x2 "Twin Boar" rocket 
+                engine. Unlocking the part would have required [UNLOCK SCIENCE AND FUNDS], which 
+                simply could not justify its limited benefits.
+            </p>
         </div>
     </body>
 </html>
