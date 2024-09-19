@@ -1,0 +1,62 @@
+body{
+    margin: 0;
+}
+
+#noticeBar{
+    margin:0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgb(100,100,100);
+    color: white;
+    text-align: center;
+}
+
+header{
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    background-color:rgb(230,230,230);
+}
+
+article{
+    padding-left:10px;
+    padding-right:10px;
+}
+
+footer{
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:5px;
+    padding-bottom:10px;
+    background-color: rgb(230,230,230);
+}
+
+.articleArea img{
+    margin-top:1px;
+    margin-bottom:1px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 1px solid black;
+}
+
+.paragraphIndent{
+    margin:0;
+    padding-left:4em;
+    padding-right:4em;
+}
+
+.expression{
+    background-color:rgb(240,240,240);
+    border: 1px solid lightgrey;
+    padding: 1px;
+}
+
+.expressionExplainer{
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 90%
+}
