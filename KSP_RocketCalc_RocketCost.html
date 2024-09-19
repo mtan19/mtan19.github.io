@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>page</title>
-
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
     </head>
     <body>
         <header>
@@ -56,10 +56,7 @@
                 is recovered from the launch site.
                 <div Class="paragraphIndent">
                     <p>
-                        The recovery rate is determined by the formula<br>
-                        0.98 - surface_distance_in_km/2150
-                    </p>
-                    <p>
+                        The recovery rate is determined by the formula \(0.98 - surfaceDistance/2150\).
                         The recovery rate ranges from a 10.32% minimum to a 100% maximum
                     </p>
                 </div>
@@ -70,25 +67,26 @@
                 as a linear equation<br>
                 <div Class="paragraphIndent">
                     <p>
-                        LaunchCost = UnrecoverableCost + LossesFromImperfectRecovery<br>
-                        LaunchCost = UnrecoverableCost + (1-RecoveryRate)*RecoverableCost
+                        \(LaunchCost = UnrecoverableCost + LossesFromImperfectRecovery\)<br>
+                        \(LaunchCost = UnrecoverableCost + (1-RecoveryRate)*RecoverableCost\)<br>
                     </p>
                     <p>
                         As<br>
-                        TotalCost = UnrecoverableCost + RecoverableCost<br>
-                        UnrecoverableCost = TotalCost - RecoverableCost
+                        \(TotalCost = UnrecoverableCost + RecoverableCost\)<br>
+                        \(UnrecoverableCost = TotalCost - RecoverableCost\)<br>
                     </p>
                     <p>
-                        It is possible to manipulate the equation to<br>
-                        LaunchCost = (TotalCost - RecoverableCost) + (1-RecoveryRate)*RecoverableCost<br>
-                        <b>LaunchCost = TotalCost - RecoverableCost*RecoveryRate</b>
+                        It is possible to marge the two equations into<br>
+                        \(LaunchCost = (TotalCost - RecoverableCost) + (1-RecoveryRate)*RecoverableCost\)<br>
+                    </p>
+                    <p>
+                        Which can be simplified into
+                        $$LaunchCost = TotalCost - RecoverableCost*RecoveryRate$$
                     </p>
                 </div>
             </p>
             <p>
-                The equation in the form of <br>
-                LaunchCost = TotalCost - RecoverableCost*RecoveryRate <br>
-                is better suited for the game, as the total cost is given in-game, thus 
+                The final equation is best suited for the game, as the total cost is given in-game, thus 
                 only the RecoveryCost needs to be determined by removing parts and emptying tanks
                 <div Class="paragraphIndent">
                     <!--DIAGRAM?-->
@@ -98,21 +96,21 @@
                 Cost comparisons between rocket designs can be done by calculating the intersections of 
                 the two linear equations. The intersection provides the RecoveryRate in which the rocket 
                 designs have equal launch costs. <br>
-                <b>Intersection RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)</b>
+                $$Intersection RecoveryRate = {TotalCost1-TotalCost2 \over RecoverableCost1-RecoverableCost2}$$
                 <div class="paragraphIndent">
                     <p>Note: The formula typically used to calculate the intersection of two linear 
-                        equations in the form of y=ax+b is<br>
-                        x=(b1-b2)/(a2-a1)<br>
-                        Where a2 is subtracted by a1 in the denominator
+                        equations in the form of \(y=ax+b\) is \(x={b1-b2 \over a2-a1}\), where order of which the
+                        variables are subtracted is opposite between the numerator and denominator.
                     </p>
                     <p>
-                        For the purposes of this comparison, a = -RecoverableCost. Simplifying the equation 
-                        to use RecoverableCost (positive) instead of -RecoverableCost (negative),<br>
-                        x=(b1-b2)/((-RecoverableCost2)-(-RecoverableCost1))<br>
-                        x=(b1-b2)/(-RecoverableCost2+RecoverableCost1)<br>
-                        x=(b1-b2)/(RecoverableCost1-RecoverableCost2)<br>
-                        And thus, RecoverableCost1 is subtracted by RecoverableCost2, which is the reverse of 
-                        the typical equation.
+                        For the purposes of this comparison, \(a = -RecoverableCost\). Simplifying the equation 
+                        to use \(RecoverableCost\) (positive) instead of \(-RecoverableCost\) (negative),<br>
+                        <span style="font-size: 120%; line-height: 2;">
+                            \(x={b1-b2 \over (-RecoverableCost2)-(-RecoverableCost1)}\)<br>
+                            \(x={b1-b2 \over -RecoverableCost2+RecoverableCost1}\)<br>
+                            \(x={b1-b2 \over RecoverableCost1-RecoverableCost2}\)<br>
+                        </span>
+                        And thus, the order of the variables within the denominator becomes switched.
                     </p>
                 </div>
             </p>
@@ -137,7 +135,6 @@
             </p>
             <p>
                 The list of costs was calculated using the expression<br>
-                LaunchCost = TotalCost - RecoverableCost*RecoveryRate<br>
                 <code Class="expression">=C$2-C$3*$B5</code><br>
                 <img src="images/KSC_RocketCalc_RocketCost_LaunchCost.png" alt="Expression =C$2-C$3*$B5">
             </p>
@@ -331,4 +328,10 @@
             </p>
         </div>
     </body>
+    <footer>
+        <p>
+            This page uses MathJax to display mathematical equations.<br>
+            <a href="https://www.mathjax.org/">https://www.mathjax.org/</a>
+        </p>
+    </footer>
 </html>
