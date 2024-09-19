@@ -7,6 +7,7 @@
     </head>
     <body>
         <header>
+            <img src="https://wiki.kerbalspaceprogram.com/images/0/0f/Bob_Kerman.png">
         </header>
         <div Class="articleArea" id="Introduction">
             <h1>Introduction</h1>
@@ -28,6 +29,7 @@
         </div>
         <div Class="articleArea" id="GameMechanics">
             <h1>Game Mechanics</h1>
+            <h2>Rocket part recovery</h2>
             <p>
                 Within KSP, there is a game mechanic that allows for rockets to have flown to be 
                 recovered, allowing for a partial refund of the cost of the rocket.
@@ -62,6 +64,7 @@
                     </p>
                 </div>
             </p>
+            <h2>Launch Cost Equation</h2>
             <p>
                 Based on these game mechanics, the launch cost of a given rocket can be expressed 
                 as a linear equation<br>
@@ -134,7 +137,9 @@
             </p>
             <p>
                 The list of costs was calculated using the expression<br>
-                EXPRESSION, include image
+                LaunchCost = TotalCost - RecoverableCost*RecoveryRate<br>
+                <code Class="expression">=C$2-C$3*$B5</code><br>
+                <img src="images/KSC_RocketCalc_RocketCost_LaunchCost.png" alt="Expression =C$2-C$3*$B5">
             </p>
             <h2>Cost Comparisons</h2>
             <p>
@@ -144,8 +149,10 @@
             <p>
                 The names of each rocket design is automatically duplicated from the 
                 <i>Rocket Cost Sheet</i> on the first row and column with the expression<br>
-                ROW EXPRESSION<br>
-                COLUMN EXPRESSION
+                Expression for first row: 
+                <code Class="expression">='Rocket Cost Sheet'!C$1</code><br>
+                Expression for first column:
+                <code Class="expression">=INDIRECT(ADDRESS(1,ROW()))</code>
             </p>
             <p>
                 The comparison function was implemented to compare the costs of each rocket, but 
@@ -219,11 +226,51 @@
             </p>
             <p>
                 The implemented expression is as followed<br>
-                EXPRESSION
-                <div class="paragraphIndent">
-                    Note: There are several repeated portions within this expression. This is an artifact of 
-                    being unable to “store” values in expressions using variables
+                <code class="expression">=IF(OR(B$1=0,$A2=0),"-",IF(B$1=$A2,"/",IFERROR(IF(OR( (((XLOOKUP($A2,
+                    'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,
+                    'Rocket Cost Sheet'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$3:$3)
+                    -XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$3:$3)))&lt;0),(((XLOOKUP($A2,'Rocket 
+                    Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'
+                    !$2:$2))/(XLOOKUP($A2,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Sheet'
+                    !$1:$1,'Rocket Cost Sheet'!$3:$3)))&gt;1)),IF(XLOOKUP($A2,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)&lt;
+                    XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2),"Always","Never"),IF(XLOOKUP($A2,
+                    'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket 
+                    Cost Sheet'!$2:$2),"&lt;","&gt;")&((XLOOKUP($A2,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)-XLOOKUP(B$1,
+                    'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Sheet'!$1:$1,'Rocket Cost 
+                    Sheet'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$3:$3)))),IF(XLOOKUP($A2,'Rocket 
+                    Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Sheet'!$1:$1,'Rocket Cost Sheet'!$2:$2)
+                    ,"Always","Never"))))
+                </code>
+                Explanation of the expression:
+                Hover over boxes to get an explanation of the code snippet<br>
+                <div class="expressionExplainer">
+<pre><span style="border: 1px solid red;" title="Step1: If the row or column is empty, fill with &quot;-&quot;">=IF(OR(B$1=0,$A2=0),"-",</span>
+    <span style="border: 1px solid red;" title="Step2: If the row or column is the same rocket, fill with &quot;/&quot;">IF(B$1=$A2,"/",</span>
+		IFERROR(
+			IF(
+<div style="border: 1px solid red; margin-left: 17em; margin-bottom: -2ex;" title="Step3a(1): If the intersection falls outside of 0~1...">OR( 
+	<span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&lt;0)
+	,
+	<span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&gt;1)
+)</div>
+				,
+				<span style="border: 1px solid red; padding-bottom: 3px; padding-top: 3px;" title="Step3a(2): ... compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span>
+				,
+<div style="border: 1px solid red; margin-left: 17em; margin-bottom: -2ex; padding-bottom: 3px; padding-top: 3px;" title="Step3b: The intersection falls inside of 0~1, compare the TotalCost, add add the approproate &quot;&lt;&quot, &quot;&gt;&quot;, then append the intersection RecoveryRatio"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"&lt;","&gt;")
+&
+<span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span></div>
+			)
+			,
+			<span style="border: 1px solid red; padding-bottom: 3px; padding-top: 3px;" title="Step4: If a #DIV/0! error, compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span>
+		)
+	)
+)</pre>
                 </div>
+                Note: There are several repeated portions within this expression (shown in
+                <span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">limegreen</span>
+                 and 
+                <span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">orange</span>
+                ). This is an artifact of being unable to “store” values in expressions using variables
             </p>
         </div>
         <div Class="articleArea" id="Example">
@@ -250,7 +297,8 @@
             </p>
             <p>
                 The launch costs of the two rockets were studied using the tool. <br>
-                PICTURE RCS, CCS
+                <img src="images/KSC_RocketCalc_RocketCost_Example_LaunchCost.png" alt="launch costs of 151-auto and X152"><br>
+                <img src="images/KSC_RocketCalc_RocketCost_Example_CostComaprison.png" alt="Comparing costs of 151-auto and X152">
             </p>
             <p>
                 After analysis, while it was true that the X152 could have cheaper launch costs 
