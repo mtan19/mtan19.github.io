@@ -245,28 +245,30 @@
                     </code>
                     <br><br>
                     Explanation of the expression: hover over boxes to get an explanation of the code snippet
-                    <div class="expressionExplainer" style="overflow: scroll; margin-top: -2ex;">
-    <pre><span style="border: 1px solid red;" title="Step1: If the row or column is empty, fill with &quot;-&quot;">=IF(OR(B$1=0,$A2=0),"-",</span>
-        <span style="border: 1px solid red;" title="Step2: If the row or column is the same rocket, fill with &quot;/&quot;">IF(B$1=$A2,"/",</span>
-            IFERROR(
-                IF(
-<div style="border: 1px solid red; margin-left: 11em; margin-bottom: -2ex; width: fit-content;" title="Step3a(1): If the intersection falls outside of 0~1...">OR( 
-    <span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&lt;0)
-,
-    <span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&gt;1)
-)</div>
-                    ,
-                    <span style="border: 1px solid red; padding-bottom: 3px; padding-top: 3px;" title="Step3a(2): ... compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span>
-                    ,
-<div style="border: 1px solid red; margin-left: 11em; margin-bottom: -2ex; padding-bottom: 3px; padding-top: 3px; width: fit-content;" title="Step3b: The intersection falls inside of 0~1, compare the TotalCost, add add the approproate &quot;&lt;&quot, &quot;&gt;&quot;, then append the intersection RecoveryRatio"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"&lt;","&gt;")
-&
-<span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span></div>
-                )
-                ,
-            <span style="border: 1px solid red; padding-bottom: 3px; padding-top: 3px;" title="Step4: If a #DIV/0! error, compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span style="border: 1px solid orange;" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span>
-            )
-        )
-    )</pre>
+                    <div class ="expressionExplainer" style="overflow:scroll; margin-top:-2ex;">
+                        <pre><!--1--><span class="redBox" title="Step1: If the row or column is empty, fill with &quot;-&quot;">=IF(OR(B$1=0,$A2=0),"-",</span></pre>
+                        <pre>   <!--2--><span class="redBox" title="Step2: If the row or column is the same rocket, fill with &quot;/&quot;">IF(B$1=$A2,"/",</span></pre>
+                        <pre>       IFERROR(</pre>
+                        <pre>           IF(</pre>
+                                            <!--3a1--><div class="redBox" style="margin-left: 6.5em;" title="Step3a(1): If the intersection falls outside of 0~1..."><pre>OR(</pre> 
+                                            <pre>   <span class="greenBox" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&lt;0)</pre>
+                                            <pre>   ,</pre>
+                                            <pre>   <span class="greenBox" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">(((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span>&gt;1)</pre>
+                                            <pre>)</pre>
+                                            </div>
+                        <pre>               ,</pre>
+                        <pre>               <!--3a2--><span class="redBoxLarge" title="Step3a(2): ... compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span class="orangeBox" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span></pre>
+                        <pre>               ,</pre>
+                                            <!--3b--><div class="redBoxLarge" style="margin-left:6.5em;" title="Step3b: The intersection falls inside of 0~1, compare the TotalCost, add add the approproate &quot;&lt;&quot, &quot;&gt;&quot;, then append the intersection RecoveryRatio"><pre><span class="orangeBox" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"&lt;","&gt;")</pre>
+                                            <pre>&</pre>
+                                            <pre><span class="greenBox" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">((XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2))/(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)-XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$3:$3)))</span></pre>
+                                            </div>
+                        <pre>           )</pre>
+                        <pre>           ,</pre>
+                        <pre>           <!--4--><span class="redBoxLarge" title="Step4: If a #DIV/0! error, compare the TotalCost, if ColumnRocket is cheaper, fill with &quot;always&quot;, otherwise &quot;never&quot;"><span class="orangeBox" title="If ColumnRocket's TotalCost is cheaper than RowRocket's">IF(XLOOKUP($A2,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)&lt;XLOOKUP(B$1,'Rocket Cost Calculations'!$1:$1,'Rocket Cost Calculations'!$2:$2)</span>,"Always","Never")</span></pre>
+                        <pre>       )</pre>
+                        <pre>    )</pre>
+                        <pre>)</pre>
                     </div>
                     Note: There are several repeated portions within this expression (shown in
                     <span style="border: 1px solid limegreen;" title="RecoveryRate = (TotalCost1-TotalCost2)/(RecoverableCost1-RecoverableCost2)">limegreen</span>
